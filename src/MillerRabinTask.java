@@ -4,19 +4,20 @@ import java.util.Random;
 
 public class MillerRabinTask implements AM {
 
+    private static final String POSTFIX_PRIME = " - Prime\n";
+    private static final String POSTFIX_NOT_PRIME = " - Not Prime\n";
+
     public void run(AMInfo info) {
         String encodedData = (String) info.parent.readObject();
         String[] data = encodedData.split(" ");
         int k = Integer.parseInt(data[0]);
         StringBuilder response = new StringBuilder();
 
-        for(int i = 1; i < data.length; i++) {
+        for (int i = 1; i < data.length; i++) {
             int number = Integer.parseInt(data[i]);
             boolean isPrime = millerRabin(number, k);
             response.append(number);
-            response.append(" - ");
-            response.append(isPrime ? "Prime" : "Not Prime");
-            response.append("\n");
+            response.append(isPrime ? POSTFIX_PRIME : POSTFIX_NOT_PRIME);
         }
 
         info.parent.write(response.toString());
