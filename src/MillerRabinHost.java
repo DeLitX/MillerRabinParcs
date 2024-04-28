@@ -33,7 +33,7 @@ public class MillerRabinHost {
             points[currentWorkerIndex].execute(TASK_CLASS_NAME);
 
             int startIndex = currentWorkerIndex * chunkSize;
-            int endIndex = (currentWorkerIndex == numWorkers - 1) ? values.size() - 1 - startIndex : startIndex + chunkSize;
+            int endIndex = (currentWorkerIndex == numWorkers - 1) ? values.size() - 1 : startIndex + chunkSize - 1;
             System.out.println("Worker " + currentWorkerIndex + " will process values from " + startIndex + " to " + endIndex + " inclusive.");
             String data = encodeDataToTask(k, values, startIndex, endIndex);
 
