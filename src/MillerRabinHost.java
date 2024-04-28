@@ -6,7 +6,8 @@ import java.io.File;
 
 public class MillerRabinHost {
 
-    private static final String TEST_FILE_NAME = "input100k.txt";
+    private static final String INPUT_FILE_NAME = "input100k.txt";
+    private static final String OUTPUT_FILE_NAME = "output100k.txt";
     private static final int WORKERS_AMOUNT = 4;
 
     private static final String TASK_JAR_NAME = "MillerRabinTask.jar";
@@ -16,7 +17,7 @@ public class MillerRabinHost {
         task curTask = new task();
         curTask.addJarFile(TASK_JAR_NAME);
 
-        String fileName = curTask.findFile(TEST_FILE_NAME);
+        String fileName = curTask.findFile(INPUT_FILE_NAME);
         int k = readKFromInput(fileName);
         ArrayList<String> values = readInputData(fileName);
 
@@ -49,8 +50,23 @@ public class MillerRabinHost {
             finalResult.append(result);
         }
 
-        System.out.println("Final result:\n" + finalResult);
+        System.out.println("Task completed");
+        writeOutputToFile(OUTPUT_FILE_NAME, finalResult.toString());
         curTask.end();
+    }
+
+    private static void writeOutputToFile(String filename, String data) throws Exception {
+        File file = new File(filename);
+        file.createNewFile();
+        Scanner sc = new Scanner(data);
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            if (line.isEmpty()) {
+                break;
+            }
+            System.out.println(line);
+        }
+        sc.close();
     }
 
     private static String encodeDataToTask(
