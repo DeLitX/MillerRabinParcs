@@ -60,7 +60,7 @@ public class MillerRabinHost {
     ) {
         StringBuilder result = new StringBuilder();
         result.append(k).append(" ");
-        for (int i = startIndex; i < endIndex; i++) {
+        for (int i = startIndex; i <= endIndex; i++) {
             result.append(values.get(i)).append(" ");
         }
         return result.toString();
