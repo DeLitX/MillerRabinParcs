@@ -55,7 +55,7 @@ public class MillerRabinHost {
             boolean[] result = (boolean[]) channels[i].readObject();
             for (int j = 0; j < result.length; j++) {
                 boolean isPrime = result[j];
-                finalResult.append(isPrime);
+                finalResult.append(values.get(i * chunkSize + j));
                 finalResult.append(isPrime ? POSTFIX_PRIME : POSTFIX_NOT_PRIME);
             }
         }
