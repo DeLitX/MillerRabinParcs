@@ -19,7 +19,7 @@ public class MillerRabinTask implements AM {
             response.append("\n");
         }
 
-        info.parent.write(response);
+        info.parent.write(response.toString());
     }
 
     private static boolean millerRabin(int n, int k) {

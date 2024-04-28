@@ -47,7 +47,7 @@ public class MillerRabinHost {
             finalResult.append(result);
         }
 
-        System.out.println("Final result: " + finalResult.toString());
+        System.out.println("Final result: " + finalResult);
         curTask.end();
     }
 
