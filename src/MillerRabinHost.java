@@ -82,9 +82,7 @@ public class MillerRabinHost {
     ) {
         ArrayList<Integer> result = new ArrayList<>();
         result.add(k);
-        for (int i = startIndex; i <= endIndex; i++) {
-            result.add(values.get(i));
-        }
+        result.addAll(values.subList(startIndex, endIndex + 1));
         return result;
     }
 
