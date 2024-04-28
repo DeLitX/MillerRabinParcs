@@ -1,5 +1,8 @@
 import parcs.*;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
@@ -50,22 +53,18 @@ public class MillerRabinHost {
             finalResult.append(result);
         }
 
-        System.out.println("Task completed");
         writeOutputToFile(OUTPUT_FILE_NAME, finalResult.toString());
+        System.out.println("Task completed");
         curTask.end();
     }
 
     private static void writeOutputToFile(String filename, String data) throws Exception {
-        File file = new File(filename);
-        file.createNewFile();
-        Scanner sc = new Scanner(data);
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            if (line.isEmpty()) {
-                break;
-            }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write(data);
+            System.out.println("Data written to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        sc.close();
     }
 
     private static String encodeDataToTask(
