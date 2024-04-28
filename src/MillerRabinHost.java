@@ -9,9 +9,9 @@ import java.io.File;
 
 public class MillerRabinHost {
 
-    private static final String INPUT_FILE_NAME = "input100k.txt";
-    private static final String OUTPUT_FILE_NAME = "output100k.txt";
-    private static final int WORKERS_AMOUNT = 1;
+    private static final String INPUT_FILE_NAME = "input10M.txt";
+    private static final String OUTPUT_FILE_NAME = "output10M.txt";
+    private static final int WORKERS_AMOUNT = 4;
 
     private static final String TASK_JAR_NAME = "MillerRabinTask.jar";
     private static final String TASK_CLASS_NAME = "MillerRabinTask";
