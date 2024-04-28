@@ -1,26 +1,20 @@
 import parcs.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MillerRabinTask implements AM {
 
-    private static final String POSTFIX_PRIME = " - Prime\n";
-    private static final String POSTFIX_NOT_PRIME = " - Not Prime\n";
-
     public void run(AMInfo info) {
-        String encodedData = (String) info.parent.readObject();
-        String[] data = encodedData.split(" ");
-        int k = Integer.parseInt(data[0]);
-        StringBuilder response = new StringBuilder();
+        ArrayList<Integer> data = (ArrayList<Integer>) info.parent.readObject();
+        int k = data.get(0);
+        boolean[] results = new boolean[data.size() - 1];
 
-        for (int i = 1; i < data.length; i++) {
-            int number = Integer.parseInt(data[i]);
-            boolean isPrime = millerRabin(number, k);
-            response.append(number);
-            response.append(isPrime ? POSTFIX_PRIME : POSTFIX_NOT_PRIME);
+        for (int i = 1; i < data.size(); i++) {
+            results[i - 1] = millerRabin(data.get(i), k);
         }
 
-        info.parent.write(response.toString());
+        info.parent.write(results);
     }
 
     private static boolean millerRabin(int n, int k) {

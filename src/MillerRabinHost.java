@@ -16,13 +16,16 @@ public class MillerRabinHost {
     private static final String TASK_JAR_NAME = "MillerRabinTask.jar";
     private static final String TASK_CLASS_NAME = "MillerRabinTask";
 
+    private static final String POSTFIX_PRIME = " - Prime\n";
+    private static final String POSTFIX_NOT_PRIME = " - Not Prime\n";
+
     public static void main(String[] args) throws Exception {
         task curTask = new task();
         curTask.addJarFile(TASK_JAR_NAME);
 
         String fileName = curTask.findFile(INPUT_FILE_NAME);
         int k = readKFromInput(fileName);
-        ArrayList<String> values = readInputData(fileName);
+        ArrayList<Integer> values = readInputData(fileName);
 
         int numWorkers = WORKERS_AMOUNT;
         int chunkSize = values.size() / numWorkers;
@@ -40,7 +43,7 @@ public class MillerRabinHost {
             int startIndex = currentWorkerIndex * chunkSize;
             int endIndex = (currentWorkerIndex == numWorkers - 1) ? values.size() - 1 : startIndex + chunkSize - 1;
             System.out.println("Worker " + currentWorkerIndex + " will process values from " + (startIndex + 1) + " to " + (endIndex + 1) + " inclusive.");
-            String data = encodeDataToTask(k, values, startIndex, endIndex);
+            ArrayList<Integer> data = encodeDataToTask(k, values, startIndex, endIndex);
 
             channels[currentWorkerIndex].write(data);
         }
@@ -49,8 +52,12 @@ public class MillerRabinHost {
 
         for (int i = 0; i < numWorkers; i++) {
             System.out.println("Waiting for result from worker " + i + "...");
-            String result = (String) channels[i].readObject();
-            finalResult.append(result);
+            boolean[] result = (boolean[]) channels[i].readObject();
+            for (int j = 0; j < result.length; j++) {
+                boolean isPrime = result[j];
+                finalResult.append(isPrime);
+                finalResult.append(isPrime ? POSTFIX_PRIME : POSTFIX_NOT_PRIME);
+            }
         }
 
         writeOutputToFile(OUTPUT_FILE_NAME, finalResult.toString());
@@ -67,18 +74,18 @@ public class MillerRabinHost {
         }
     }
 
-    private static String encodeDataToTask(
+    private static ArrayList<Integer> encodeDataToTask(
             int k,
-            ArrayList<String> values,
+            ArrayList<Integer> values,
             int startIndex,
             int endIndex
     ) {
-        StringBuilder result = new StringBuilder();
-        result.append(k).append(" ");
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(k);
         for (int i = startIndex; i <= endIndex; i++) {
-            result.append(values.get(i)).append(" ");
+            result.add(values.get(i));
         }
-        return result.toString();
+        return result;
     }
 
     private static int readKFromInput(String filename) throws Exception {
@@ -88,16 +95,16 @@ public class MillerRabinHost {
         return k;
     }
 
-    private static ArrayList<String> readInputData(String filename) throws Exception {
+    private static ArrayList<Integer> readInputData(String filename) throws Exception {
         Scanner sc = new Scanner(new File(filename));
         sc.nextLine();
-        ArrayList<String> values = new ArrayList<>();
+        ArrayList<Integer> values = new ArrayList<>();
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
             if (line.isEmpty()) {
                 break;
             }
-            values.add(line);
+            values.add(Integer.parseInt(line));
         }
         sc.close();
         return values;
