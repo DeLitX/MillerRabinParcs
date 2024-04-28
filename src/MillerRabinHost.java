@@ -34,6 +34,7 @@ public class MillerRabinHost {
 
             int startIndex = currentWorkerIndex * chunkSize;
             int endIndex = (currentWorkerIndex == numWorkers - 1) ? values.size() - 1 - startIndex : startIndex + chunkSize;
+            System.out.println("Worker " + currentWorkerIndex + " will process values from " + startIndex + " to " + endIndex + " inclusive.");
             String data = encodeDataToTask(k, values, startIndex, endIndex);
 
             channels[currentWorkerIndex].write(data);
@@ -47,7 +48,7 @@ public class MillerRabinHost {
             finalResult.append(result);
         }
 
-        System.out.println("Final result: " + finalResult);
+        System.out.println("Final result:\n" + finalResult);
         curTask.end();
     }
 
