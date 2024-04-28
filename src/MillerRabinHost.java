@@ -6,7 +6,7 @@ import java.io.File;
 
 public class MillerRabinHost {
 
-    private static final String TEST_FILE_NAME = "input1.txt";
+    private static final String TEST_FILE_NAME = "input.txt";
     private static final String TASK_JAR_NAME = "MillerRabinTask.jar";
     private static final String TASK_CLASS_NAME = "MillerRabinTask";
     private static final int WORKERS_AMOUNT = 2;
