@@ -7,9 +7,10 @@ import java.io.File;
 public class MillerRabinHost {
 
     private static final String TEST_FILE_NAME = "input100k.txt";
+    private static final int WORKERS_AMOUNT = 4;
+
     private static final String TASK_JAR_NAME = "MillerRabinTask.jar";
     private static final String TASK_CLASS_NAME = "MillerRabinTask";
-    private static final int WORKERS_AMOUNT = 2;
 
     public static void main(String[] args) throws Exception {
         task curTask = new task();
