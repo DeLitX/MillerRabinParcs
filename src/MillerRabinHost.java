@@ -64,7 +64,6 @@ public class MillerRabinHost {
             if (line.isEmpty()) {
                 break;
             }
-            System.out.println(line);
         }
         sc.close();
     }
