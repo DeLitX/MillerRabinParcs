@@ -16,4 +16,4 @@ out/MillerRabinHost.jar: out/parcs.jar src/MillerRabinHost.java
 build: out/MillerRabinTask.jar out/MillerRabinHost.jar
 
 run: out/MillerRabinHost.jar out/MillerRabinTask.jar
-	@cd out && java -cp "MillerRabinHost.jar;parcs.jar" MillerRabinHost
+	@cd out && java -cp "MillerRabinHost.jar:parcs.jar" MillerRabinHost
